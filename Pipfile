@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 sqlalchemy = "*"
 eralchemy2 = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.10"
