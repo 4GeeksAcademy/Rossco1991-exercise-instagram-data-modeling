@@ -4,6 +4,8 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
+from enum import Enum
+from sqlalchemy import Enum as SaEnum
 
 Base = declarative_base()
 
@@ -54,14 +56,23 @@ class Follower(Base):
     user_from_id = Column(Integer, ForeignKey('user.id'))
     user_to_id = Column(Integer, ForeignKey('user.id'))
 
+class Type(Enum):
+    IMAGE = 1 
+    VIDEO = 2
 
 class Media(Base):
     __tablename__ = 'media'
     id = Column(Integer, primary_key=True)
-    type = Column(String(256))
+    type = Column(SaEnum(Type))
     url = Column(String(256))
     post = Column(Integer, ForeignKey('posts.id'))
 
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True)
+    comment_text = Column(String(512))
+    author_id = Column(Integer, ForeignKey('user.id'))
+    post_id = Column(Integer, ForeignKey('posts.id'))
 
 # Draw from SQLAlchemy base
 try:
